@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            padding: 30px;
+        }
+
+        .form-container {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #1e3a5f;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #cbd5e1;
+            border-radius: 5px;
+        }
+
+        .save-button, .back-button {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 11px 16px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .save-button {
+            background: #1769e0;
+            color: white;
+        }
+
+        .back-button {
+            background: #64748b;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div class="form-container">
+
+    <h1 th:text="${student.id == null ? 'Add New Student' : 'Edit Student'}">
+        Student Form
+    </h1>
+
+    <form th:action="@{/students/save}"
+          th:object="${student}" method="post" novalidate>
+
+        <input type="hidden" th:field="*{id}">
+
+        <label for="rollNumber">Roll Number</label>
+        <input type="text" id="rollNumber"
+               th:field="*{rollNumber}" required maxlength="20">
+<div th:if="${#fields.hasErrors('rollNumber')}"
+     th:errors="*{rollNumber}"
+     style="color: red; font-size: 13px;">
+</div>
+        <label for="name">Full Name</label>
+        <input type="text" id="name"
+               th:field="*{name}" required maxlength="100">
+        <div th:if="${#fields.hasErrors('name')}"
+     			th:errors="*{name}"
+     			style="color: red; font-size: 13px;">
+		</div>       
+
+        <label for="email">Email</label>
+        <input type="email" id="email"
+               th:field="*{email}" required maxlength="100">
+               <div th:if="${#fields.hasErrors('email')}"
+     th:errors="*{email}"
+     style="color: red; font-size: 13px;">
+</div>
+
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone"
+               th:field="*{phone}" maxlength="15">
+               <div th:if="${#fields.hasErrors('phone')}"
+     th:errors="*{phone}"
+     style="color: red; font-size: 13px;">
+</div>
+
+        <label for="course">Course</label>
+        <input type="text" id="course"
+               th:field="*{course}" required maxlength="100">
+
+        <button type="submit" class="save-button">Save Student</button>
+
+        <a th:href="@{/students}" class="back-button">Back to Students</a>
+    </form>
+
+</div>
+</body>
+</html>
